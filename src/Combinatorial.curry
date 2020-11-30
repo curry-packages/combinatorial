@@ -8,13 +8,14 @@
 --- In practice, these conditions are not enforced.
 ---
 --- @author Sergio Antoy (with extensions by Michael Hanus)
---- @version January 2019
+--- @version November 2020
 ------------------------------------------------------------------------------
 
-module Combinatorial(permute, subset, allSubsets, splitSet,
-                     sizedSubset, partition) where
+module Combinatorial
+  ( permute, subset, allSubsets, splitSet, sizedSubset, partition )
+ where
 
-import List(sum)
+import Data.List ( sum )
 
 import Control.SetFunctions
 import Test.Prop
@@ -31,8 +32,8 @@ import Test.Prop
 permute        :: [a] -> [a]
 permute []     = []
 permute (x:xs) = ndinsert (permute xs)
-    where ndinsert [] = [x]
-          ndinsert (y:ys) = (x:y:ys) ? (y:ndinsert ys)
+  where ndinsert ys     = x : ys
+        ndinsert (y:ys) = y : ndinsert ys
 
 -- Properties:
 permute1234 = permute [1,2,3,4] ~> [1,3,4,2]
@@ -106,6 +107,7 @@ sizedSubset c l = if c == 0 then [] else aux l
     where aux (x:xs) = x:sizedSubset (c-1) xs ? sizedSubset c xs
 
 -- Precondition:
+sizedSubset'pre :: Int -> [a] -> Bool
 sizedSubset'pre c _ = c>=0
 
 -- Properties:

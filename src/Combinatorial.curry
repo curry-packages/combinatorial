@@ -8,7 +8,7 @@
 --- In practice, these conditions are not enforced.
 ---
 --- @author Sergio Antoy (with extensions by Michael Hanus)
---- @version November 2020
+--- @version December 2020
 ------------------------------------------------------------------------------
 
 module Combinatorial
@@ -66,7 +66,7 @@ subsetElems xs = anyOf (subset xs) <~ anyOf xs
 --- @param xs - The list.
 --- @return All the sublists of the argument.
 
-allSubsets :: Ord a => [a] -> [[a]]
+allSubsets :: (Data a, Ord a) => [a] -> [[a]]
 allSubsets xs = sortValues (set1 subset xs)
 
 -- Properties:

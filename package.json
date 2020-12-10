@@ -12,10 +12,15 @@
         "setfunctions" : ">= 3.0.0, < 4.0.0"
     },
     "exportedModules": [ "Combinatorial" ],
-    "testsuite": {
-        "src-dir": "test",
-        "modules": [ "TestCombinatorial" ]
-    },
+    "testsuite": [
+       { "src-dir": "src",
+         "options": "-m40",
+         "modules": [ "Combinatorial" ]
+       },
+       { "src-dir": "test",
+         "modules": [ "TestCombinatorial" ]
+       }
+    ],
     "source": {
       "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/combinatorial.git",
       "tag": "$version"

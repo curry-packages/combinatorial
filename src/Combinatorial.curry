@@ -8,8 +8,9 @@
 --- In practice, these conditions are not enforced.
 ---
 --- @author Sergio Antoy (with extensions by Michael Hanus)
---- @version December 2020
+--- @version June 2021
 ------------------------------------------------------------------------------
+{-# OPTIONS_FRONTEND -Wno-overlapping -Wno-missing-signatures #-}
 
 module Combinatorial
   ( permute, subset, allSubsets, splitSet, sizedSubset, partition )
@@ -66,7 +67,7 @@ subsetElems xs = anyOf (subset xs) <~ anyOf xs
 --- @param xs - The list.
 --- @return All the sublists of the argument.
 
-allSubsets :: (Data a, Ord a) => [a] -> [[a]]
+allSubsets :: Ord a => [a] -> [[a]]
 allSubsets xs = sortValues (set1 subset xs)
 
 -- Properties:
@@ -87,11 +88,11 @@ splitSet (x:xs) = let (u,v) = splitSet xs in (x:u,v) ? (u,x:v)
 -- Properties:
 splitSet1234 = splitSet [1,2,3,4] ~> ([1,3,4],[2])
 -- The sum of the length of the two sublists is the length of the argument list:
-splitSetLengths xs =
-  (\ (xs,ys) -> length xs + length ys) (splitSet xs) <~> length xs
+splitSetLengths zs =
+  (\ (xs,ys) -> length xs + length ys) (splitSet zs) <~> length zs
 -- The two sublists and the argument list have the same elements:
-splitSetElems xs =
-  (\ (xs,ys) -> anyOf xs ? anyOf ys) (splitSet xs) <~> anyOf xs
+splitSetElems zs =
+  (\ (xs,ys) -> anyOf xs ? anyOf ys) (splitSet zs) <~> anyOf zs
 
 
 ------------------------------------------------------------------------------
@@ -104,7 +105,7 @@ splitSetElems xs =
 
 sizedSubset     :: Int -> [a] -> [a]
 sizedSubset c l = if c == 0 then [] else aux l
-    where aux (x:xs) = x:sizedSubset (c-1) xs ? sizedSubset c xs
+ where aux (x:xs) = x:sizedSubset (c-1) xs ? sizedSubset c xs
 
 -- Precondition:
 sizedSubset'pre :: Int -> [a] -> Bool

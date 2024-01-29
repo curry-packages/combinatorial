@@ -18,7 +18,7 @@ module Combinatorial
 
 import Data.List ( sum )
 
-import Control.SetFunctions
+import Control.Search.SetFunctions
 import Test.Prop
 
 ------------------------------------------------------------------------------
